@@ -1,7 +1,9 @@
+import Layout from "@/components/ui/layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
+import { Link } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 
 const Index = () => {
@@ -153,28 +155,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-lg"></div>
-            <span className="text-xl font-bold">MYSTERY BOXES</span>
-          </div>
-          <nav className="hidden md:flex items-center space-x-6">
-            <a href="#catalog" className="hover:text-primary transition-colors">Каталог</a>
-            <a href="#analytics" className="hover:text-primary transition-colors">Аналитика</a>
-            <Button variant="outline" size="sm">
-              <Icon name="ShoppingCart" size={16} className="mr-2" />
-              Корзина
-            </Button>
-            <Button size="sm">
-              <Icon name="User" size={16} className="mr-2" />
-              Войти
-            </Button>
-          </nav>
-        </div>
-      </header>
+    <Layout>
 
       {/* Hero Section */}
       <section className="relative py-20 px-4 text-center overflow-hidden">
@@ -187,21 +168,24 @@ const Index = () => {
               className="w-64 h-64 object-contain animate-float"
             />
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <h1 className="text-6xl md:text-9xl font-black mb-6 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-fade-in">
             MYSTERY BOXES
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Создай свой уникальный бокс-сюрприз из любимой категории товаров. 
-            Выбери размер, наполнение и получи незабываемые эмоции!
+          <div className="text-3xl md:text-4xl font-black text-secondary mb-6 animate-scale-in">
+            🎁 СЮРПРИЗЫ, КОТОРЫЕ ВЗРЫВАЮТ МОЗГ! 🎁
+          </div>
+          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto animate-fade-in" style={{animationDelay: '0.3s'}}>
+            Не просто покупка — это билет в мир невероятных открытий! Каждый бокс — это лотерея эмоций, 
+            где ты всегда выигрываешь. Погружайся в океан сюрпризов!
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="text-lg px-8">
-              <Icon name="Package" size={20} className="mr-2" />
-              Создать бокс
+          <div className="flex flex-col sm:flex-row gap-6 justify-center animate-scale-in" style={{animationDelay: '0.6s'}}>
+            <Button size="lg" className="text-xl px-12 py-4">
+              <Icon name="Zap" size={24} className="mr-2" />
+              ШОКИРУЙ МЕНЯ!
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8">
-              <Icon name="Play" size={20} className="mr-2" />
-              Как это работает
+            <Button variant="outline" size="lg" className="text-xl px-12 py-4">
+              <Icon name="Shuffle" size={24} className="mr-2" />
+              СЛУЧАЙНЫЙ ВЫБОР
             </Button>
           </div>
         </div>
@@ -485,9 +469,11 @@ const Index = () => {
                   <CardDescription>{category.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button className="w-full group-hover:bg-primary">
-                    <Icon name="ArrowRight" size={16} className="mr-2" />
-                    Выбрать товары
+                  <Button className="w-full group-hover:bg-primary" asChild>
+                    <Link to={`/${category.id}`}>
+                      <Icon name="Rocket" size={16} className="mr-2" />
+                      ПОГНАЛИ!
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -585,73 +571,21 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 text-center bg-gradient-to-r from-primary to-secondary">
+      <section className="py-20 px-4 text-center bg-gradient-to-r from-primary via-secondary to-primary">
         <div className="container mx-auto">
-          <h2 className="text-4xl font-bold text-primary-foreground mb-6">
-            Готов создать свой mystery box?
+          <h2 className="text-6xl font-black text-white mb-6 animate-fade-in">
+            НЕ МОЖЕШЬ РЕШИТЬ?
           </h2>
-          <p className="text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-            Присоединяйся к тысячам довольных клиентов и получи свой уникальный бокс-сюрприз уже сегодня!
+          <p className="text-2xl font-bold text-white/90 mb-8 animate-scale-in">
+            🎯 МЫ ВЫБЕРЕМ ИДЕАЛЬНЫЙ БОКС ДЛЯ ТЕБЯ! 🎯
           </p>
-          <Button size="lg" variant="outline" className="text-lg px-8 bg-white text-primary hover:bg-gray-100">
-            <Icon name="Sparkles" size={20} className="mr-2" />
-            Начать прямо сейчас
+          <Button size="lg" variant="outline" className="text-xl px-12 py-4 bg-white text-primary hover:bg-gray-100 font-black animate-scale-in" style={{animationDelay: '0.3s'}}>
+            <Icon name="Sparkles" size={24} className="mr-2" />
+            СОЗДАТЬ МОЙ БОКС!
           </Button>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 px-4 bg-card border-t border-border">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-6 h-6 bg-gradient-to-r from-primary to-secondary rounded"></div>
-                <span className="font-bold">MYSTERY BOXES</span>
-              </div>
-              <p className="text-muted-foreground">
-                Создаем уникальные боксы-сюрпризы для каждого
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Категории</h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>Автомобиль</li>
-                <li>Одежда</li>
-                <li>Электроника</li>
-                <li>Сладости</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Поддержка</h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>Помощь</li>
-                <li>Доставка</li>
-                <li>Возврат</li>
-                <li>Контакты</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Следи за нами</h3>
-              <div className="flex space-x-4">
-                <Button variant="ghost" size="sm">
-                  <Icon name="MessageCircle" size={20} />
-                </Button>
-                <Button variant="ghost" size="sm">
-                  <Icon name="Instagram" size={20} />
-                </Button>
-                <Button variant="ghost" size="sm">
-                  <Icon name="Youtube" size={20} />
-                </Button>
-              </div>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-border text-center text-muted-foreground">
-            <p>&copy; 2024 Mystery Boxes. Все права защищены.</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </Layout>
   );
 };
 
