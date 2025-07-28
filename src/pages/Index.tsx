@@ -103,6 +103,55 @@ const Index = () => {
     { size: 'XL', price: '9,990₽', description: '13-15 товаров' }
   ];
 
+  const popularBoxes = [
+    {
+      id: 'gamer-pro',
+      title: 'Геймер Pro',
+      category: 'Электороника',
+      price: '5,990₽',
+      originalPrice: '8,500₽',
+      description: 'Лучшие игровые аксессуары и гаджеты',
+      items: ['Механическая клавиатура', 'Gaming мышь', 'Наушники', 'LED-подсветка', 'Игровые стикеры'],
+      rating: 4.9,
+      orders: 1247,
+      badge: 'ХИТ',
+      gradient: 'from-purple-600 to-blue-600'
+    },
+    {
+      id: 'fashion-trend',
+      title: 'Fashion Trend',
+      category: 'Одежда',
+      price: '4,490₽',
+      originalPrice: '6,200₽',
+      description: 'Стильные аксессуары и модные вещи',
+      items: ['Дизайнерская футболка', 'Стильная кепка', 'Аксессуары', 'Модные носки', 'Брелок'],
+      rating: 4.8,
+      orders: 923,
+      badge: 'ТРЕНД',
+      gradient: 'from-pink-600 to-rose-600'
+    },
+    {
+      id: 'sweet-dreams',
+      title: 'Sweet Dreams',
+      category: 'Сладости',
+      price: '2,990₽',
+      originalPrice: '4,100₽',
+      description: 'Изысканные сладости со всего мира',
+      items: ['Швейцарский шоколад', 'Японские KitKat', 'Итальянские конфеты', 'Французские макаруны', 'Редкие леденцы'],
+      rating: 4.7,
+      orders: 756,
+      badge: 'НОВИНКА',
+      gradient: 'from-orange-600 to-yellow-600'
+    }
+  ];
+
+  const preferences = [
+    { id: 'budget', label: 'Бюджет', options: ['До 2000₽', '2000-5000₽', '5000-10000₽', 'Свыше 10000₽'] },
+    { id: 'age', label: 'Возраст', options: ['До 18', '18-25', '25-35', '35-50', '50+'] },
+    { id: 'interests', label: 'Интересы', options: ['Технологии', 'Спорт', 'Творчество', 'Путешествия', 'Кулинария', 'Мода'] },
+    { id: 'occasion', label: 'Повод', options: ['День рождения', 'Новый год', 'Без повода', 'Подарок другу', 'Для себя'] }
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
@@ -158,8 +207,129 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Box Sizes */}
+      {/* Popular Boxes */}
+      <section className="py-16 px-4 bg-muted/30">
+        <div className="container mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">🔥 Самые популярные боксы</h2>
+            <p className="text-muted-foreground text-lg">Готовые наборы, которые выбирают тысячи клиентов</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {popularBoxes.map((box, index) => (
+              <Card key={box.id} className="group hover:scale-105 transition-all duration-300 cursor-pointer animate-fade-in relative overflow-hidden" style={{animationDelay: `${index * 0.2}s`}}>
+                <div className={`absolute top-4 right-4 z-10`}>
+                  <Badge className={`bg-gradient-to-r ${box.gradient} text-white border-0`}>
+                    {box.badge}
+                  </Badge>
+                </div>
+                <CardHeader className="pb-4">
+                  <div className={`w-20 h-20 rounded-2xl bg-gradient-to-r ${box.gradient} flex items-center justify-center mb-4 group-hover:animate-float mx-auto`}>
+                    <Icon name="Package" size={40} className="text-white" />
+                  </div>
+                  <CardTitle className="text-2xl text-center">{box.title}</CardTitle>
+                  <CardDescription className="text-center">{box.description}</CardDescription>
+                  <div className="flex items-center justify-center space-x-2 mt-2">
+                    <div className="flex items-center text-yellow-500">
+                      <Icon name="Star" size={16} className="mr-1 fill-current" />
+                      <span className="text-sm font-medium">{box.rating}</span>
+                    </div>
+                    <span className="text-muted-foreground text-sm">•</span>
+                    <span className="text-muted-foreground text-sm">{box.orders} заказов</span>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <p className="font-semibold text-sm text-muted-foreground mb-2">Что внутри:</p>
+                    <ul className="space-y-1">
+                      {box.items.slice(0, 3).map((item, idx) => (
+                        <li key={idx} className="text-sm flex items-center">
+                          <Icon name="Check" size={14} className="mr-2 text-green-500" />
+                          {item}
+                        </li>
+                      ))}
+                      {box.items.length > 3 && (
+                        <li className="text-sm text-muted-foreground">
+                          + еще {box.items.length - 3} товара
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-1">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-2xl font-bold text-primary">{box.price}</span>
+                        <span className="text-sm text-muted-foreground line-through">{box.originalPrice}</span>
+                      </div>
+                      <Badge variant="secondary" className="text-xs">
+                        Экономия {parseInt(box.originalPrice.replace(/[^\d]/g, '')) - parseInt(box.price.replace(/[^\d]/g, ''))}₽
+                      </Badge>
+                    </div>
+                  </div>
+                  <Button className="w-full group-hover:bg-secondary group-hover:text-secondary-foreground transition-colors">
+                    <Icon name="ShoppingCart" size={16} className="mr-2" />
+                    Заказать сейчас
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Personalization Section */}
       <section className="py-16 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">🎯 Персонализация под тебя</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Расскажи о своих предпочтениях, и мы подберем идеальный бокс специально для тебя
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <Card className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {preferences.map((pref, index) => (
+                  <div key={pref.id} className="animate-scale-in" style={{animationDelay: `${index * 0.1}s`}}>
+                    <h3 className="font-semibold text-lg mb-4 flex items-center">
+                      <Icon name="Settings" size={20} className="mr-2 text-primary" />
+                      {pref.label}
+                    </h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {pref.options.map((option, idx) => (
+                        <Button 
+                          key={idx}
+                          variant="outline" 
+                          className="justify-start hover:bg-primary hover:text-primary-foreground transition-colors"
+                          size="sm"
+                        >
+                          {option}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-8 pt-6 border-t border-border">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button size="lg" className="text-lg px-8">
+                    <Icon name="Sparkles" size={20} className="mr-2" />
+                    Найти мой идеальный бокс
+                  </Button>
+                  <Button variant="outline" size="lg" className="text-lg px-8">
+                    <Icon name="Shuffle" size={20} className="mr-2" />
+                    Удиви меня
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Box Sizes */}
+      <section className="py-16 px-4 bg-muted/30">
         <div className="container mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12">Выбери размер бокса</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -183,10 +353,124 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Categories */}
-      <section id="catalog" className="py-16 px-4">
+      {/* Interactive Box Constructor */}
+      <section className="py-16 px-4">
         <div className="container mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">Категории товаров</h2>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">🛠️ Конструктор персонального бокса</h2>
+            <p className="text-muted-foreground text-lg">Собери бокс мечты по своему вкусу</p>
+          </div>
+          
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Step 1: Choose Category */}
+              <Card className="animate-scale-in">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center mr-3 text-sm font-bold">1</div>
+                    Выбери категорию
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {categories.slice(0, 4).map((category) => (
+                    <Button 
+                      key={category.id}
+                      variant="outline" 
+                      className="w-full justify-start hover:bg-primary hover:text-primary-foreground"
+                      size="sm"
+                    >
+                      <Icon name={category.icon as any} size={16} className="mr-2" />
+                      {category.title}
+                    </Button>
+                  ))}
+                  <Button 
+                    variant="ghost" 
+                    className="w-full justify-start text-muted-foreground"
+                    size="sm"
+                  >
+                    <Icon name="Plus" size={16} className="mr-2" />
+                    Показать все категории
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Step 2: Set Preferences */}
+              <Card className="animate-scale-in" style={{animationDelay: '0.2s'}}>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center mr-3 text-sm font-bold">2</div>
+                    Настрой предпочтения
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Ценовой диапазон</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button variant="outline" size="sm" className="hover:bg-secondary">До 3k₽</Button>
+                      <Button variant="outline" size="sm" className="hover:bg-secondary">3k-7k₽</Button>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Стиль</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button variant="outline" size="sm" className="hover:bg-secondary">Классика</Button>
+                      <Button variant="outline" size="sm" className="hover:bg-secondary">Тренды</Button>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Количество товаров</label>
+                    <div className="flex items-center space-x-2">
+                      <Button variant="outline" size="sm">
+                        <Icon name="Minus" size={14} />
+                      </Button>
+                      <span className="px-4 py-2 bg-muted rounded text-sm font-medium">5 товаров</span>
+                      <Button variant="outline" size="sm">
+                        <Icon name="Plus" size={14} />
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Step 3: Preview & Order */}
+              <Card className="animate-scale-in" style={{animationDelay: '0.4s'}}>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center mr-3 text-sm font-bold">3</div>
+                    Твой бокс готов!
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="bg-muted/50 rounded-lg p-4 text-center">
+                    <div className="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-xl mx-auto mb-3 flex items-center justify-center animate-float">
+                      <Icon name="Package" size={32} className="text-white" />
+                    </div>
+                    <h3 className="font-semibold mb-1">Персональный Mystery Box</h3>
+                    <p className="text-sm text-muted-foreground mb-2">Электроника • 5 товаров</p>
+                    <div className="text-2xl font-bold text-primary">4,990₽</div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Button className="w-full">
+                      <Icon name="ShoppingCart" size={16} className="mr-2" />
+                      Заказать бокс
+                    </Button>
+                    <Button variant="outline" className="w-full" size="sm">
+                      <Icon name="Eye" size={16} className="mr-2" />
+                      Предпросмотр содержимого
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Categories */}
+      <section id="catalog" className="py-16 px-4 bg-muted/30">
+        <div className="container mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-12">Все категории товаров</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {categories.map((category, index) => (
               <Card key={category.id} className="group hover:scale-105 transition-all duration-300 cursor-pointer animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
